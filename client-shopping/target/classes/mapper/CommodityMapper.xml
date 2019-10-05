@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.dao.CommodityDao">
+    <resultMap id="productResult" type="com.qf.domain.Commodity">
+        <id property="commodityId" column="commodity_id"></id>
+        <result property="commodityName" column="commodity_name"></result>
+        <result property="commodityPrice" column="commodity_price"></result>
+        <result property="commodityBrand" column="commodity_brand"></result>
+        <result property="commodityWeight" column="commodity_weight"></result>
+        <result property="commodityStandard" column="commodity_standard"></result>
+        <result property="commodityFirm" column="commodity_firm"></result>
+        <result property="commodityApprovalNum" column="commodity_approval_num"></result>
+        <result property="commodityPhotoOne" column="commodity_photo_one"></result>
+        <result property="commodityPhotoTwo" column="commodity_photo_two"></result>
+        <result property="commodityPhotoThere" column="commodity_photo_there"></result>
+        <result property="commodityPhotoFour" column="commodity_photo_four"></result>
+        <result property="commodityIntroduce" column="commodity_introduce"></result>
+        <result property="commodityType" column="commodity_type"></result>
+        <result property="commodityCount" column="commodity_count"></result>
+        <result property="commodityForm" column="commodity_form"></result>
+        <result property="catalogId" column="catalog_id"></result>
+    </resultMap>
+    <select id="loadAllProduct" resultMap="productResult">
+        select * from commodity
+    </select>
+    <select id="loadAllProductByPrice" resultMap="productResult">
+        select * from commodity order by commodity_price desc
+    </select>
+    <!--查询总行数-->
+    <select id="selectRows" resultType="int">
+        select count(*) from commodity
+    </select>
+    <select id="findByProductId" resultMap="productResult" parameterType="int">
+        select * from commodity where commodity_id=#{commodityId}
+    </select>
+</mapper>

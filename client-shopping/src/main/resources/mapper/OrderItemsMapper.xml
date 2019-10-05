@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.dao.OrderItemsDao">
+    <resultMap id="OrderItemsResult" type="OrderItems">
+        <id property="id" column="id"></id>
+        <result property="commodityName" column="commodity_name"></result>
+        <result property="commodityPrice" column="commodity_price"></result>
+        <result property="commodityWeight" column="commodity_weight"></result>
+        <result property="commodityCount" column="commodity_count"></result>
+        <result property="commodityId" column="commodity_id"></result>
+        <result property="orderId" column="order_id"></result>
+    </resultMap>
+    <insert id="addOrderItems">
+        insert into order_items(commodity_name,commodity_price,commodity_weight,commodity_count,commodity_id,order_id)
+        values (#{commodityName},#{commodityPrice},#{commodityWeight},#{commodityCount},#{commodityId},#{orderId})
+    </insert>
+
+    <select id="findById" resultMap="OrderItemsResult">
+        select * from order_items where order_id = #{orderId}
+    </select>
+
+    <delete id="deleteOrderItems">
+        delete from order_items where order_id = #{orderId}
+    </delete>
+</mapper>

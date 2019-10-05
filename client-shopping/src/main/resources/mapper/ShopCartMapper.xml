@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.qf.dao.ShopCartDao">
+    <resultMap id="ShopCartResult" type="ShopCart">
+        <id property="cartId" column="cart_id"></id>
+        <result property="userId" column="user_id"></result>
+        <result property="proNum" column="pro_num"></result>
+        <association property="commodity" javaType="Commodity">
+            <id property="commodityId" column="commodity_id"></id>
+            <result property="commodityName" column="commodity_name"></result>
+            <result property="commodityPrice" column="commodity_price"></result>
+            <result property="commodityBrand" column="commodity_brand"></result>
+            <result property="commodityWeight" column="commodity_weight"></result>
+            <result property="commodityStandard" column="commodity_standard"></result>
+            <result property="commodityFirm" column="commodity_firm"></result>
+            <result property="commodityApprovalNum" column="commodity_approval_num"></result>
+            <result property="commodityPhotoOne" column="commodity_photo_one"></result>
+            <result property="commodityPhotoTwo" column="commodity_photo_two"></result>
+            <result property="commodityPhotoThere" column="commodity_photo_there"></result>
+            <result property="commodityPhotoFour" column="commodity_photo_four"></result>
+            <result property="commodityIntroduce" column="commodity_introduce"></result>
+            <result property="commodityType" column="commodity_type"></result>
+            <result property="commodityCount" column="commodity_count"></result>
+            <result property="commodityForm" column="commodity_form"></result>
+            <result property="catalogId" column="catalog_id"></result>
+        </association>
+    </resultMap>
+    <insert id="addCart" parameterType="cart">
+        insert into shopcart(pro_num,  user_id, commodity_id) values(#{proNum},  #{userId}, #{commodityId})
+    </insert>
+
+    <update id="updateCart" parameterType="cart">
+        update
+          shopcart
+        set
+          pro_num = pro_num + #{proNum}
+        where
+          user_id = #{userId}
+        and
+          commodity_id = #{commodityId}
+
+    </update>
+
+    <select id="queryByCondition" parameterType="cart" resultMap="ShopCartResult">
+        select * from
+          shopcart
+        where
+          user_id = #{userId}
+        and
+          commodity_id = #{commodityId}
+    </select>
+
+    <select id="findCart" resultMap="ShopCartResult">
+        select
+         c.*, p.*
+        from
+          shopcart c, commodity p
+        where
+          c.commodity_id = p.commodity_id
+        and
+          c.user_id = #{userId}
+    </select>
+
+    <select id="findCartById" resultMap="ShopCartResult">
+        select
+          c.*, p.*
+        from
+          shopcart c, commodity p
+        where
+          c.commodity_id = p.commodity_id
+        and
+          c.cart_id = #{cartId}
+    </select>
+
+    <update id="updateNum">
+        update
+          shopcart
+        set
+          pro_num = #{proNum}
+        where
+          cart_id = #{cartId}
+    </update>
+
+    <delete id="deleteCart" >
+        delete from
+          shopcart
+        where
+        cart_id=#{cartId}
+    </delete>
+</mapper>
